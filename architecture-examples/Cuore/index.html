@@ -1,0 +1,139 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<title>Template • TodoMVC</title>
+	<link rel="stylesheet" href="../../assets/base.css">
+	<!-- CSS overrides - remove if you don't need it -->
+	<link rel="stylesheet" href="css/app.css">
+	<!--[if IE]>
+	<script src="../assets/ie.js"></script>
+	<![endif]-->
+	
+		<script src="js/src/Cuore/Cuore.js" type="text/javascript"></script>
+        <script src="js/src/Cuore/Cuore.Core.js" type="text/javascript"></script>
+        <script src="js/src/Cuore/Cuore.Class.js" type="text/javascript"></script>
+        <script src="js/src/Cuore/Cuore.Dom.js" type="text/javascript"></script>
+        <script src="js/src/Cuore/Cuore.Dom.Event.js" type="text/javascript"></script>
+        <script src="js/src/Cuore/Cuore.Bus.js" type="text/javascript"></script>
+        <script src="js/src/Cuore/Cuore.State.js" type="text/javascript"></script>
+        <script src="js/src/Cuore/Cuore.Page.js" type="text/javascript"></script>
+        <script src="js/src/Cuore/Cuore.Message.js" type="text/javascript"></script>
+        <script src="js/src/Cuore/Cuore.Component.js" type="text/javascript"></script>
+        <script src="js/src/Cuore/Cuore.Renderer.js" type="text/javascript"></script>
+        <script src="js/src/Cuore/Cuore.Handler.js" type="text/javascript"></script>
+        <script src="js/src/Cuore/Cuore.Directory.js" type="text/javascript"></script>
+        <script src="js/src/Cuore/Cuore.HandlerSet.js" type="text/javascript"></script>
+        <script src="js/src/Cuore/Cuore.Registry.js" type="text/javascript"></script>
+        <script src="js/src/Cuore/Cuore.Service.js" type="text/javascript"></script>
+        <script src="js/src/Cuore/Cuore.Journey.js" type="text/javascript"></script>
+        <script src="js/src/Cuore/Cuore.Decoration.js" type="text/javascript"></script>
+
+        <script src="js/src/Cuore/Components/Cuore.Components.Nestable.js" type="text/javascript"></script>
+        <script src="js/src/Cuore/Components/Cuore.Components.Input.js" type="text/javascript"></script>
+        <script src="js/src/Cuore/Components/Cuore.Components.Button.js" type="text/javascript"></script>
+        <script src="js/src/Cuore/Components/Cuore.Components.TimeRange.js" type="text/javascript"></script>
+        <script src="js/src/Cuore/Components/Cuore.Components.Collapsable.js" type="text/javascript"></script>
+        <script src="js/src/Cuore/Components/Cuore.Components.SwitchButton.js" type="text/javascript"></script>
+        <script src="js/src/Cuore/Components/Cuore.Components.LabelPanel.js" type="text/javascript"></script>
+        <script src="js/src/Cuore/Components/Cuore.Components.NumericSelector.js" type="text/javascript"></script>
+        <script src="js/src/Cuore/Components/Cuore.Components.Link.js" type="text/javascript"></script>
+        
+        <script src="js/src/Cuore/Handlers/Cuore.Handlers.SetText.js" type="text/javascript"></script>
+        <script src="js/src/Cuore/Handlers/Cuore.Handlers.Executor.js" type="text/javascript"></script>
+        <script src="js/src/Cuore/Handlers/Cuore.Handlers.Print.js" type="text/javascript"></script>
+        <script src="js/src/Cuore/Handlers/Cuore.Handlers.SwitchCollapseAndUncollapse.js" type="text/javascript"></script>
+
+        <script src="js/src/Cuore/Renderers/Cuore.Renderers.Input.js" type="text/javascript"></script>
+        <script src="js/src/Cuore/Renderers/Cuore.Renderers.Button.js" type="text/javascript"></script>
+        <script src="js/src/Cuore/Renderers/Cuore.Renderers.TimeRange.js" type="text/javascript"></script>
+        <script src="js/src/Cuore/Renderers/Cuore.Renderers.Collapsable.js" type="text/javascript"></script>
+        <script src="js/src/Cuore/Renderers/Cuore.Renderers.SwitchButton.js" type="text/javascript"></script>
+        <script src="js/src/Cuore/Renderers/Cuore.Renderers.NumericSelector.js" type="text/javascript"></script>
+        <script src="js/src/Cuore/Renderers/Cuore.Renderers.Link.js" type="text/javascript"></script>
+
+        <script src="js/src/Cuore/Services/Cuore.Services.Button.js" type="text/javascript"></script>
+        <script src="js/src/Cuore/Services/Cuore.Services.Label.js" type="text/javascript"></script>
+        <script src="js/src/Cuore/Services/Cuore.Services.Null.js" type="text/javascript"></script>
+        
+        <script src="js/src/TodoPage.js" type="text/javascript"></script>
+        <script src="js/src/TodoInput.js" type="text/javascript"></script>
+        <script src="js/src/InputRenderer.js" type="text/javascript"></script>
+
+        <script type="text/javascript">
+            CUORE.Dom.ready(function() {
+
+                document.page = new TodoPage("http://www.anydomain.com");
+                document.page.draw();
+            });
+        </script>	
+	
+	
+	
+</head>
+<body>
+	<section id="todoapp">
+		<header id="header">
+			<h1>todos</h1>
+			<input id="new-todo" placeholder="What needs to be done?" autofocus>
+		</header>
+		<!-- This section should be hidden by default and shown when there are todos -->
+		<section id="main">
+			<input id="toggle-all" type="checkbox">
+			<label for="toggle-all">Mark all as complete</label>
+			<ul id="todo-list">
+				<!-- These are here just to show the structure of the list items -->
+				<!-- List items should get the class `editing` when editing and `completed` when marked as completed -->
+				<li class="completed">
+					<div class="view">
+						<input class="toggle" type="checkbox" checked>
+						<label>Create a TodoMVC template</label>
+						<button class="destroy"></button>
+					</div>
+					<input class="edit" value="Create a TodoMVC template">
+				</li>
+				<li>
+					<div class="view">
+						<input class="toggle" type="checkbox">
+						<label>Rule the web</label>
+						<button class="destroy"></button>
+					</div>
+					<input class="edit" value="Rule the web">
+				</li>
+			</ul>
+		</section>
+		<!-- This footer should hidden by default and shown when there are todos -->
+		<footer id="footer">
+			<!-- This should be `0 items left` by default -->
+			<span id="todo-count"><strong>1</strong> item left</span>
+			<!-- Remove this if you don't implement routing -->
+			<ul id="filters">
+				<li>
+					<a class="selected" href="#/">All</a>
+				</li>
+				<li>
+					<a href="#/active">Active</a>
+				</li>
+				<li>
+					<a href="#/completed">Completed</a>
+				</li>
+			</ul>
+			<button id="clear-completed">Clear completed (1)</button>
+		</footer>
+	</section>
+	<footer id="info">
+		<p>Double-click to edit a todo</p>
+		<!-- Remove the below line ↓ -->
+		<p>Template by <a href="http://github.com/sindresorhus">Sindre Sorhus</a></p>
+		<!-- Change this out with your name and url ↓ -->
+		<p>Created by <a href="http://todomvc.com">you</a></p>
+		<p>Part of <a href="http://todomvc.com">TodoMVC</a></p>
+	</footer>
+	<!-- Scripts here. Don't remove this ↓ -->
+	<script src="../assets/base.js"></script>
+	<script src="js/app.js"></script>
+	
+	
+</body>
+</html>
