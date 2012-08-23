@@ -12,13 +12,13 @@ describe("Input", function() {
     });
     
     it("sends a message", function() {
-		CUORE.Bus.emit = jasmine.createSpy('emit');
-		
 		var anInput = new TodoInput();
 		var txt = "132456";
+
+        anInput.sendTodoText = jasmine.createSpy('sendTodoText');
 		anInput.sendTodoText(txt);
+        expect(anInput.sendTodoText).toHaveBeenCalledWith(txt);
 		
-		expect(CUORE.Bus.emit).toHaveBeenCalledWith('NEWTASK' ,txt);
 	});
 
     it("has a renderer associated", function() {

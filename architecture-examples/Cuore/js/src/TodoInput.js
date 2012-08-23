@@ -6,6 +6,7 @@ TodoInput = CUORE.Class(CUORE.Components.Input, {
     },
 
 	sendTodoText: function(todoText) {
-		CUORE.Bus.emit('NEWTASK', todoText);
+		var service = document.page.getService('TASK');
+		service.execute('newTask', todoText);
 	}
 });
