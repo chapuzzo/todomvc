@@ -5,13 +5,19 @@ TodoTasksService = CUORE.Class(CUORE.Service, {
     },
 
     newTask: function(params){
-    	//var eventName = this.getEventNameForExecution('newTask');
+        var eventname = this.getEventNameForExecution('newTask');
+    	if (params.length > 0) {       
+            var todos = localStorage["todos-Cuore"];
+            todos && (todos = JSON.parse(todos));
+            todos || (todos = []);
+            todos.push(params);
+            localStorage["todos-Cuore"] = JSON.stringify(todos);
+            this.emit(eventname, todos);
+        }
+        
     },
-});
-
-
-AdditionHandler = CUORE.Class(CUORE.Handler, {
-	handle: function(message){
-		window.alert(message);
-	}
+ 
+    wrapResponse: function(response){
+        return response;
+    },
 });

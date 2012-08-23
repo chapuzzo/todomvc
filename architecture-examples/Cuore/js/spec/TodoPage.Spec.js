@@ -13,8 +13,7 @@ describe("Page", function() {
         expect(aPage).toBeInstanceOf(TodoPage);
     });
     
-    it ("contains an input", function() {
-		
+    it("contains an input", function() {
 		aPage.addComponent = jasmine.createSpy('addComponent');
 		aPage.initializeComponents();
 		
@@ -22,5 +21,15 @@ describe("Page", function() {
         expect(arguments[0]).toBeInstanceOf(CUORE.Components.Input);
 		expect(arguments[1]).toEqual("new-todo");
 	});
+
+    it("contains a TodoList", function() {
+        aPage.addComponent = jasmine.createSpy('addComponent');
+        aPage.initializeComponents();
+        
+        var arguments = aPage.addComponent.argsForCall[1];
+        expect(arguments[0]).toBeInstanceOf(CUORE.Components.List);
+        expect(arguments[1]).toEqual("todo-list");
+
+    });
 
 });

@@ -7,8 +7,8 @@ InputRenderer = CUORE.Class(CUORE.Renderer, {
         });
 
 	    this.panel.addEventListener('keydown', function(event) {
-        	if (event.keyCode == 13){
-        		console.log("enter pressed!");
+	    	var KEY_ENTER = 13;
+        	if (event.keyCode == KEY_ENTER){
         		this.blur();
         	}			
         });
@@ -20,7 +20,7 @@ InputRenderer = CUORE.Class(CUORE.Renderer, {
 		return this.panel.value;
 	},
 	sendInputValue: function(component){
-		component.sendTodoText(this.panel.value);
+		component.sendTodoText(this.panel.value.trim());
 		this.panel.value = "";	
 	}
 });
