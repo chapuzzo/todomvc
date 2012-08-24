@@ -1,4 +1,5 @@
 InputRenderer = CUORE.Class(CUORE.Renderer, {
+
 	paint: function(component){
 		InputRenderer.parent.paint.call(this,component);
 		var self = this;
@@ -13,12 +14,15 @@ InputRenderer = CUORE.Class(CUORE.Renderer, {
         	}			
         });
 	},
+
 	updateWhenDrawn: function(component) {
 		this.panel.value = component.getValue();
 	},
+
 	getValue: function(){
 		return this.panel.value;
 	},
+	
 	sendInputValue: function(component){
 		component.sendTodoText(this.panel.value.trim());
 		this.panel.value = "";	
