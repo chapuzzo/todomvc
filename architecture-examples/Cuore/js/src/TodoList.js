@@ -6,7 +6,6 @@ TodoList = CUORE.Class(CUORE.Components.List, {
     }
 });	
 
-
 ListHandler = CUORE.Class(CUORE.Handler, {
 
 	init: function() {

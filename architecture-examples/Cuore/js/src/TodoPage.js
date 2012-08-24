@@ -13,8 +13,8 @@ TodoPage = CUORE.Class(CUORE.Page, {
         var aTodoList = new TodoList();
         this.addComponent(aTodoList, 'todo-list', CUORE.Behaviours.HIJACK);
 
-        var aNestable = new CUORE.Components.Nestable();
-        this.addComponent(aNestable, 'footer', CUORE.Behaviours.REPLACE);
+        var aFooter = new TodoFooter();
+        this.addComponent(aFooter, 'footer', CUORE.Behaviours.HIJACK);
 
         aTodoList.addHandler('TASK_newTask_EXECUTED', new ListHandler());
         aTodoList.addHandler('TASK_editTask_EXECUTED', new ListHandler());

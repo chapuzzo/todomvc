@@ -4,5 +4,4 @@ TodoItem = CUORE.Class(CUORE.Component, {
 		TodoItem.parent.init.call(this);
 		this.setRenderer(new ItemRenderer());	
 	}
-
 });
