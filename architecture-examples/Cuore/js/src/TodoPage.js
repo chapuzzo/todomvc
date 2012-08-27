@@ -7,14 +7,12 @@ TodoPage = CUORE.Class(CUORE.Page, {
         window.addEventListener('hashchange', function(){
             var aFilter = window.location.hash.replace(/#\//, '');
             self.setFilter(aFilter);
-            console.log("onHashChange");
             CUORE.Bus.emit('changedFilter', undefined);
         });
 
         window.addEventListener('load', function(){
             var aFilter = window.location.hash.replace(/#\//, '');
             self.setFilter(aFilter);
-            console.log("onLoad");
             CUORE.Bus.emit('changedFilter', undefined);
         });
 
@@ -31,7 +29,7 @@ TodoPage = CUORE.Class(CUORE.Page, {
     },
 
     initializeComponents: function(){
-    	CUORE.Bus.enableDebug();
+    	//CUORE.Bus.enableDebug();
 
         var aTodo = new TodoInput();
         this.addComponent(aTodo,'new-todo', CUORE.Behaviours.HIJACK);

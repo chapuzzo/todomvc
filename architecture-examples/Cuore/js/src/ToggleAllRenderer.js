@@ -11,37 +11,25 @@ ToggleAllRenderer = CUORE.Class(CUORE.Renderer, {
         this.panel.checked = false;
 	},
 
+
+	//Some kind of Black-magic.-which-needs-toBe-rewritten done
 	updateWhenDrawn: function(component) {
 		var filter = document.page.getFilter();
 		var service = document.page.getService('TASK');
 		var todoList = service._getTodos();
-		if (todoList.length == 0) return this.panel.style.display = 'none';
-		else this.panel.style.display = 'block';
-		switch (filter){
-			case 'completed':
-				if (service.completed() > 0)
-				this.panel.checked = true;
-				break;
-			case 'active' : 
-				if (service.completed() > 0)
-				this.panel.checked = true;
-			default: {
-				var guarda = true;
-				if (todoList.length == 0) guarda = false;
-				else
-				for (var i=0; i<todoList.length; i++){
-						console.log(todoList[i]);
-					if (todoList[i].completed !== true ) {
-						guarda = false;
-						break;
-					}
-				}
-				this.panel.checked = guarda;
-			}
-		}
-	},
+
+		if (todoList.length == 0) 
+			return this.panel.style.display = 'none';
+		else
+			this.panel.style.display = 'block';
+
+		if (service.completed() > 0 && service.active() == 0)
+			this.panel.checked = true;
+		else 
+			this.panel.checked = false;
+	}/*,
 
 	getValue: function(){
 		return this.panel.checked;
-	}
+	}*/
 });
