@@ -1,7 +1,11 @@
 ListRenderer = CUORE.Class(CUORE.Renderers.List, {
     
 	init : function(){
-		ListRenderer.parent.init.call(this);
+		ListRenderer.parent.init.call(this);        
+
+        window.addEventListener('hashchange', function(aa){
+            
+        });
 	},
 
 	updateWhenDrawn: function(component) {
@@ -9,6 +13,7 @@ ListRenderer = CUORE.Class(CUORE.Renderers.List, {
         for (var i = 0, len = component.size(); i < len; i++) {
             this._addItem(component.item(i), i);
         }
+        alert(component.aaa);
     },
 
     _addItem: function(todo) {

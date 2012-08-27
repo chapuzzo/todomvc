@@ -11,7 +11,9 @@ TodoTasksService = CUORE.Class(CUORE.Service, {
 
     _getTodos: function() {
         var todos = (localStorage["todos-Cuore"] || '[]');
-        todos && (todos = JSON.parse(todos));
+        //todos && (
+            todos = JSON.parse(todos);
+        //    );
         //todos || (todos = []);
         return todos;
     },
@@ -68,6 +70,23 @@ TodoTasksService = CUORE.Class(CUORE.Service, {
         }
         this._saveTodos(todos);
         this.emit(eventname, todos);
+    },
+
+    deleteCompletedTasks: function(params){
+        console.log("helloo!!");
+        var eventname = this.getEventNameForExecution('deleteCompletedTasks');
+        var todos = this._getTodos();
+        var newtodolist = [];
+        for (var i=0; i<todos.length; i++){
+            if (todos[i].completed === false) newtodolist.push(todos[i]);
+        }
+        this._saveTodos(newtodolist);
+        this.emit(eventname, newtodolist);
+        console.log("bye!!");
+    },
+
+    changedFilters: function(params){
+        
     },
  
     wrapResponse: function(response){
