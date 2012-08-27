@@ -7,62 +7,64 @@ FooterRenderer = CUORE.Class(CUORE.Renderer, {
 	updateWhenDrawn: function(component) {
 		this.panel.innerHTML="";
 
+		var service = document.page.getService('TASK');
+
+		if ((service.active() == 0 ) && (service.completed() == 0))	
+			this.panel.style.display= 'none';
+		else 
+			this.panel.style.display= 'block';
+
 		var span = CUORE.Dom.createElement('span', {'id':'todo-count'}, this.panel);
 		var strong = CUORE.Dom.createElement('strong', {}, span);
-		strong.innerHTML = 'X';
-		span.innerHTML += ' items left';
+		var itemsLeft = service.active();
+			strong.innerHTML = itemsLeft;
+		span.innerHTML += ' item' + (itemsLeft != 1 ? 's':'' )+ ' left';
 
-		var ul = CUORE.Dom.createElement('ul', {'id':'filters'}, this.panel);
+		var filterList = CUORE.Dom.createElement('filterList', {'id':'filters'}, this.panel);
 
-		var li1 = CUORE.Dom.createElement('li', {}, ul);
-		var a1 = CUORE.Dom.createElement('a', {'href':'#/'}, li1);
-		a1.innerHTML = "All";
-		CUORE.Dom.addClass(a1,'selected');
+		var liAll = CUORE.Dom.createElement('li', {}, filterList);
+		var hrefAll = CUORE.Dom.createElement('a', {'href':'#/'}, liAll);
+		hrefAll.innerHTML = "All";
+		if (document.location.hash.replace(/#\//, '') === '')
+			CUORE.Dom.addClass(hrefAll,'selected');
 
-		var li2 = CUORE.Dom.createElement('li', {}, ul);
-		var a2 = CUORE.Dom.createElement('a', {'href':'#/active'}, li2);
-		a2.innerHTML = "Active";
+		var liActive = CUORE.Dom.createElement('li', {}, filterList);
+		var hrefActive = CUORE.Dom.createElement('a', {'href':'#/active'}, liActive);
+		hrefActive.innerHTML = "Active";
+		if (document.location.hash.replace(/#\//, '') === 'active')
+			CUORE.Dom.addClass(hrefActive,'selected');
 
-
-		var li3 = CUORE.Dom.createElement('li', {}, ul);
-		var a3 = CUORE.Dom.createElement('a', {'href':'#/completed'}, li3);
-		a3.innerHTML = "Completed";
+		var liCompleted = CUORE.Dom.createElement('li', {}, filterList);
+		var hrefCompleted = CUORE.Dom.createElement('a', {'href':'#/completed'}, liCompleted);
+		hrefCompleted.innerHTML = "Completed";
+		if (document.location.hash.replace(/#\//, '') === 'completed')
+			CUORE.Dom.addClass(hrefCompleted,'selected');
 
 		var button = CUORE.Dom.createElement('botton', {'id':'clear-completed'}, this.panel);
-		button.innerHTML="Clear Completed (x)";
+		button.innerHTML="Clear Completed (" + service.completed() + ")";
+		if (service.completed() == 0) button.style.display = 'none';
 
 		button.addEventListener('click', function(){
             var service = document.page.getService('TASK');
             service.execute('deleteCompletedTasks');
 		});
 
-		a1.addEventListener('click', function(){
-			CUORE.Dom.addClass(a1,'selected');
-			CUORE.Dom.removeClass(a2,'selected');
-			CUORE.Dom.removeClass(a3,'selected');
-            var service = document.page.getService('TASK');
-            service.execute('changedFilters');
+		hrefAll.addEventListener('click', function(){
+			CUORE.Dom.addClass(hrefAll,'selected');
+			CUORE.Dom.removeClass(hrefActive,'selected');
+			CUORE.Dom.removeClass(hrefCompleted,'selected');
 		});
 
-		a2.addEventListener('click', function(){
-			CUORE.Dom.addClass(a2,'selected');
-			CUORE.Dom.removeClass(a3,'selected');
-			CUORE.Dom.removeClass(a1,'selected');
-            var service = document.page.getService('TASK');
-            service.execute('changedFilters');
+		hrefActive.addEventListener('click', function(){
+			CUORE.Dom.addClass(hrefActive,'selected');
+			CUORE.Dom.removeClass(hrefCompleted,'selected');
+			CUORE.Dom.removeClass(hrefAll,'selected');            
 		});
 
-		a3.addEventListener('click', function(){
-			CUORE.Dom.addClass(a3,'selected');
-			CUORE.Dom.removeClass(a2,'selected');
-			CUORE.Dom.removeClass(a1,'selected');
-            var service = document.page.getService('TASK');
-            service.execute('changedFilters');
+		hrefCompleted.addEventListener('click', function(){
+			CUORE.Dom.addClass(hrefCompleted,'selected');
+			CUORE.Dom.removeClass(hrefActive,'selected');
+			CUORE.Dom.removeClass(hrefAll,'selected');
 		});
-
-
-
-
-
 	}
 });
