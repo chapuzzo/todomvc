@@ -18,9 +18,6 @@ TodoPage = CUORE.Class(CUORE.Page, {
             CUORE.Bus.emit('changedFilter', undefined);
         });
 
-        this.activeTasks = 0;
-        this.completedTasks = 0;
-
         var service = this.getService('TASK');
         service.execute('updateTasksCounters', undefined);
     },
@@ -32,14 +29,6 @@ TodoPage = CUORE.Class(CUORE.Page, {
     getFilter : function(){
         return (this.filter || '');
     },
-
-    /*active : function(){
-        return this.activeTasks;
-    },
-
-    completed : function(){
-        return this.completedTasks;
-    },*/
 
     initializeComponents: function(){
     	CUORE.Bus.enableDebug();
@@ -64,19 +53,18 @@ TodoPage = CUORE.Class(CUORE.Page, {
         aTodoList.addHandler('TASK_deleteTask_EXECUTED', aListHandler);
         aTodoList.addHandler('TASK_deleteCompletedTasks_EXECUTED', aListHandler);
         aTodoList.addHandler('TASK_toggleAllTasks_EXECUTED', aListHandler);
-        aTodoList.addExecHandler('changedFilter', 'updateRender');     
         aTodoList.addHandler('TASK_updateTasksCounters_EXECUTED', aListHandler);
+        aTodoList.addExecHandler('changedFilter', 'updateRender');  
 
-        var aToggleAllHandler = new ToggleAllHandler();
-        //aToggleAllButton.addHandler('TASK_newTask_EXECUTED', aToggleAllHandler);
-        aToggleAllButton.addHandler('TASK_editTask_EXECUTED', aToggleAllHandler);
-        aToggleAllButton.addHandler('TASK_toggleTask_EXECUTED', aToggleAllHandler);
-        aToggleAllButton.addHandler('TASK_deleteTask_EXECUTED', aToggleAllHandler);
-        aToggleAllButton.addHandler('TASK_deleteCompletedTasks_EXECUTED', aToggleAllHandler);
-        aToggleAllButton.addHandler('TASK_toggleAllTasks_EXECUTED', aToggleAllHandler);
+        
+        aToggleAllButton.addExecHandler('TASK_newTask_EXECUTED', 'updateRender');
+        aToggleAllButton.addExecHandler('TASK_editTask_EXECUTED', 'updateRender');
+        aToggleAllButton.addExecHandler('TASK_toggleTask_EXECUTED', 'updateRender');
+        aToggleAllButton.addExecHandler('TASK_deleteTask_EXECUTED', 'updateRender');
+        aToggleAllButton.addExecHandler('TASK_deleteCompletedTasks_EXECUTED', 'updateRender');
+        aToggleAllButton.addExecHandler('TASK_toggleAllTasks_EXECUTED', 'updateRender');
+        aToggleAllButton.addExecHandler('TASK_updateTasksCounters_EXECUTED', 'updateRender');        
         aToggleAllButton.addExecHandler('changedFilter', 'updateRender'); 
-        //aToggleAllButton.addHandler('changedFilter', aToggleAllHandler);
-        aToggleAllButton.addHandler('TASK_updateTasksCounters_EXECUTED', aToggleAllHandler);
 
 
         var aFooterHandler = new FooterHandler();
@@ -86,8 +74,8 @@ TodoPage = CUORE.Class(CUORE.Page, {
         aFooter.addHandler('TASK_deleteTask_EXECUTED', aFooterHandler);
         aFooter.addHandler('TASK_deleteCompletedTasks_EXECUTED', aFooterHandler);
         aFooter.addHandler('TASK_toggleAllTasks_EXECUTED', aFooterHandler);
-        aFooter.addExecHandler('changedFilter', 'updateRender');
         aFooter.addHandler('TASK_updateTasksCounters_EXECUTED', aFooterHandler);
+        aFooter.addExecHandler('changedFilter', 'updateRender');
     },
 
 	initializeServices: function(){

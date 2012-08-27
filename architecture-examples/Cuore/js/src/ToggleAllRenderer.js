@@ -3,7 +3,6 @@ ToggleAllRenderer = CUORE.Class(CUORE.Renderer, {
 	paint: function(component){
 		InputRenderer.parent.paint.call(this,component);
 		
-
 	    this.panel.addEventListener('change', function() {
             var service = document.page.getService('TASK');
             service.execute('toggleAllTasks', this.checked);
@@ -13,43 +12,36 @@ ToggleAllRenderer = CUORE.Class(CUORE.Renderer, {
 	},
 
 	updateWhenDrawn: function(component) {
-		this.panel.checked = component.getValue();
+		var filter = document.page.getFilter();
+		var service = document.page.getService('TASK');
+		var todoList = service._getTodos();
+		if (todoList.length == 0) return this.panel.style.display = 'none';
+		else this.panel.style.display = 'block';
+		switch (filter){
+			case 'completed':
+				if (service.completed() > 0)
+				this.panel.checked = true;
+				break;
+			case 'active' : 
+				if (service.completed() > 0)
+				this.panel.checked = true;
+			default: {
+				var guarda = true;
+				if (todoList.length == 0) guarda = false;
+				else
+				for (var i=0; i<todoList.length; i++){
+						console.log(todoList[i]);
+					if (todoList[i].completed !== true ) {
+						guarda = false;
+						break;
+					}
+				}
+				this.panel.checked = guarda;
+			}
+		}
 	},
 
 	getValue: function(){
 		return this.panel.checked;
-	}
-});
-
-
-ToggleAllHandler = CUORE.Class(CUORE.Handler, {
-
-	init: function() {
-		ListHandler.parent.init.call(this);
-	},
-
-	handle: function(params) {
-		/*console.log("tah handle");
-		console.log(params);
-		var filter = document.page.getFilter();
-		console.log(filter);
-		//console.log(document.page.getFilter());
-		if (filter === 'completed') this.owner.renderer.panel.checked = true;
-		else
-		if (filter === 'active') this.owner.renderer.panel.checked = false;
-		//if (filter === '') 
-		else {
-			var guarda = true;
-			for (var i in params){
-				if (i.completed === true ) {
-					console.log(i);
-					guarda = false;
-					break;
-				}
-			}
-			this.owner.renderer.panel.checked = guarda;
-		}
-
-		this.owner.updateRender();*/
 	}
 });

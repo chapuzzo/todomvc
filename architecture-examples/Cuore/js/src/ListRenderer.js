@@ -74,7 +74,6 @@ ListRenderer = CUORE.Class(CUORE.Renderers.List, {
                     params.id = todo.id;
                     var service = document.page.getService('TASK');
                     service.execute('deleteTask', params);   
-
                 });
         };
     }

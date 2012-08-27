@@ -106,8 +106,7 @@ TodoTasksService = CUORE.Class(CUORE.Service, {
         var eventname = this.getEventNameForExecution('updateTasksCounters');
         var todos = this._getTodos();
         this.activeTasks = 0;
-        this.completedTasks = 0; 
-
+        this.completedTasks = 0;
         for (var i=0; i<todos.length; i++){
             if (todos[i].completed) this.completedTasks++;
             else this.activeTasks++;
