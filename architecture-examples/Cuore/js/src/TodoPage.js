@@ -7,6 +7,14 @@ TodoPage = CUORE.Class(CUORE.Page, {
         window.addEventListener('hashchange', function(){
             var aFilter = window.location.hash.replace(/#\//, '');
             self.setFilter(aFilter);
+            console.log("onHashChange");
+            CUORE.Bus.emit('changedFilter', undefined);
+        });
+
+        window.addEventListener('load', function(){
+            var aFilter = window.location.hash.replace(/#\//, '');
+            self.setFilter(aFilter);
+            console.log("onLoad");
             CUORE.Bus.emit('changedFilter', undefined);
         });
 
@@ -66,7 +74,8 @@ TodoPage = CUORE.Class(CUORE.Page, {
         aToggleAllButton.addHandler('TASK_deleteTask_EXECUTED', aToggleAllHandler);
         aToggleAllButton.addHandler('TASK_deleteCompletedTasks_EXECUTED', aToggleAllHandler);
         aToggleAllButton.addHandler('TASK_toggleAllTasks_EXECUTED', aToggleAllHandler);
-        aToggleAllButton.addExecHandler('changedFilter', 'updateRender');
+        aToggleAllButton.addExecHandler('changedFilter', 'updateRender'); 
+        //aToggleAllButton.addHandler('changedFilter', aToggleAllHandler);
         aToggleAllButton.addHandler('TASK_updateTasksCounters_EXECUTED', aToggleAllHandler);
 
 

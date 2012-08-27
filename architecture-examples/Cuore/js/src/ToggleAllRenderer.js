@@ -30,25 +30,26 @@ ToggleAllHandler = CUORE.Class(CUORE.Handler, {
 
 	handle: function(params) {
 		/*console.log("tah handle");
-		console.log(params);*/
+		console.log(params);
 		var filter = document.page.getFilter();
 		console.log(filter);
-		/*console.log(document.page.getFilter());*/
+		//console.log(document.page.getFilter());
 		if (filter === 'completed') this.owner.renderer.panel.checked = true;
-		/*else 
-		if (filter === '') {
+		else
+		if (filter === 'active') this.owner.renderer.panel.checked = false;
+		//if (filter === '') 
+		else {
 			var guarda = true;
 			for (var i in params){
-				if (i.completed != true ) {
+				if (i.completed === true ) {
+					console.log(i);
 					guarda = false;
 					break;
 				}
 			}
 			this.owner.renderer.panel.checked = guarda;
 		}
-		else
-		if (filter === 'active') this.owner.renderer.panel.checked = false;*/
 
-		this.owner.updateRender();
+		this.owner.updateRender();*/
 	}
 });
