@@ -107,6 +107,7 @@ TodoTasksService = CUORE.Class(CUORE.Service, {
         this.completedTasks = 0;
 
         for (var i=0; i<todos.length; i++){
+            // is there a way to remove this if??
             if (todos[i].completed)
                 this.completedTasks++;
             else

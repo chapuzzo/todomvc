@@ -19,11 +19,11 @@ ListRenderer = CUORE.Class(CUORE.Renderers.List, {
         ( aFilter == 'active' && todo.completed == false)  ||
         ( aFilter == 'completed' && todo.completed == true) ){
 
-            var item = CUORE.Dom.createElement('li', {'id':todo.id}, this.panel);
+            var anItem = CUORE.Dom.createElement('li', {'id':todo.id}, this.panel);
             if (todo.completed)
-                CUORE.Dom.addClass(item,"completed");
+                CUORE.Dom.addClass(anItem,"completed");
 
-            var aDiv = CUORE.Dom.createElement('div', {}, item);
+            var aDiv = CUORE.Dom.createElement('div', {}, anItem);
             CUORE.Dom.addClass(aDiv,"view");
 
             var checkedValue = todo.completed || undefined;
@@ -36,12 +36,12 @@ ListRenderer = CUORE.Class(CUORE.Renderers.List, {
             var aButton = CUORE.Dom.createElement('button', {}, aDiv);	
             CUORE.Dom.addClass(aButton,"destroy");
 
-    		var anInput = CUORE.Dom.createElement('input', {'taskId':todo.id}, item);
+    		var anInput = CUORE.Dom.createElement('input', {'taskId':todo.id}, anItem);
             anInput.value = todo.title;
             CUORE.Dom.addClass(anInput,"edit");
 
             aLabel.addEventListener('dblclick', function (){
-                CUORE.Dom.addClass(item,"editing");
+                CUORE.Dom.addClass(anItem,"editing");
                 anInput.focus();
             });
 

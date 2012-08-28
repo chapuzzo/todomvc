@@ -10,6 +10,7 @@ FooterRenderer = CUORE.Class(CUORE.Renderer, {
 		var service = document.page.getService('TASK');
 
 		var visible = ((service.active() != 0 ) || (service.completed() != 0));
+		// should return here, right?
 		this.panel.style.display= (visible?'block':'none');
 
 		var span = CUORE.Dom.createElement('span', {'id':'todo-count'}, this.panel);

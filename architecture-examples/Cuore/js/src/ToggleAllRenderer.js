@@ -15,9 +15,9 @@ ToggleAllRenderer = CUORE.Class(CUORE.Renderer, {
 		var service = document.page.getService('TASK');
 		var todoList = service._getTodos();
 
-		if (todoList.length == 0) return this.panel.style.display = 'none';		
-		
-		this.panel.style.display = 'block';
+		if (todoList.length == 0) return this.panel.parentNode.style.display = 'none';		
+
+		this.panel.parentNode.style.display = 'block';
 		this.panel.checked = (service.completed() > 0 && service.active() == 0);
 	}
 
