@@ -9,35 +9,33 @@ FooterRenderer = CUORE.Class(CUORE.Renderer, {
 
 		var service = document.page.getService('TASK');
 
-		if ((service.active() == 0 ) && (service.completed() == 0))	
-			this.panel.style.display= 'none';
-		else 
-			this.panel.style.display= 'block';
+		var visible = ((service.active() != 0 ) || (service.completed() != 0));
+		this.panel.style.display= (visible?'block':'none');
 
 		var span = CUORE.Dom.createElement('span', {'id':'todo-count'}, this.panel);
 		var strong = CUORE.Dom.createElement('strong', {}, span);
 		var itemsLeft = service.active();
-			strong.innerHTML = itemsLeft;
+		strong.innerHTML = itemsLeft;
 		span.innerHTML += ' item' + (itemsLeft != 1 ? 's':'' )+ ' left';
 
-		var filterList = CUORE.Dom.createElement('filterList', {'id':'filters'}, this.panel);
+		var filterList = CUORE.Dom.createElement('ul', {'id':'filters'}, this.panel);
 
 		var liAll = CUORE.Dom.createElement('li', {}, filterList);
 		var hrefAll = CUORE.Dom.createElement('a', {'href':'#/'}, liAll);
 		hrefAll.innerHTML = "All";
-		if (document.location.hash.replace(/#\//, '') === '')
+		if (document.page.getFilter() === '')
 			CUORE.Dom.addClass(hrefAll,'selected');
 
 		var liActive = CUORE.Dom.createElement('li', {}, filterList);
 		var hrefActive = CUORE.Dom.createElement('a', {'href':'#/active'}, liActive);
 		hrefActive.innerHTML = "Active";
-		if (document.location.hash.replace(/#\//, '') === 'active')
+		if (document.page.getFilter() === 'active')
 			CUORE.Dom.addClass(hrefActive,'selected');
 
 		var liCompleted = CUORE.Dom.createElement('li', {}, filterList);
 		var hrefCompleted = CUORE.Dom.createElement('a', {'href':'#/completed'}, liCompleted);
 		hrefCompleted.innerHTML = "Completed";
-		if (document.location.hash.replace(/#\//, '') === 'completed')
+		if (document.page.getFilter() === 'completed')
 			CUORE.Dom.addClass(hrefCompleted,'selected');
 
 		var button = CUORE.Dom.createElement('botton', {'id':'clear-completed'}, this.panel);
@@ -45,7 +43,6 @@ FooterRenderer = CUORE.Class(CUORE.Renderer, {
 		if (service.completed() == 0) button.style.display = 'none';
 
 		button.addEventListener('click', function(){
-            var service = document.page.getService('TASK');
             service.execute('deleteCompletedTasks');
 		});
 

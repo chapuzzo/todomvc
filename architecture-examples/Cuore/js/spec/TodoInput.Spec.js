@@ -1,9 +1,9 @@
 describe("Input", function() {
 
     beforeEach(function() {
-            this.addMatchers({
-               toBeInstanceOf: CUORE.Matchers.toBeInstanceOf
-            });
+        this.addMatchers({
+           toBeInstanceOf: CUORE.Matchers.toBeInstanceOf
+        });
     });
 
     it("extends Input", function() {
@@ -13,7 +13,7 @@ describe("Input", function() {
     
     it("sends a message", function() {
 		var anInput = new TodoInput();
-		var txt = "132456";
+		var txt = "thisIsANewToDo";
 
         anInput.sendTodoText = jasmine.createSpy('sendTodoText');
 		anInput.sendTodoText(txt);

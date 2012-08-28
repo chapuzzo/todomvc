@@ -45,34 +45,31 @@ TodoPage = CUORE.Class(CUORE.Page, {
         this.addComponent(aFooter, 'footer', CUORE.Behaviours.HIJACK);
 
         var aListHandler = new ListHandler();
+        aTodoList.addHandler('TASK_updateTasksCounters_EXECUTED', aListHandler);
         aTodoList.addHandler('TASK_newTask_EXECUTED', aListHandler);
         aTodoList.addHandler('TASK_editTask_EXECUTED', aListHandler);
-        aTodoList.addHandler('TASK_toggleTask_EXECUTED', aListHandler);
         aTodoList.addHandler('TASK_deleteTask_EXECUTED', aListHandler);
         aTodoList.addHandler('TASK_deleteCompletedTasks_EXECUTED', aListHandler);
+        aTodoList.addHandler('TASK_toggleTask_EXECUTED', aListHandler);
         aTodoList.addHandler('TASK_toggleAllTasks_EXECUTED', aListHandler);
-        aTodoList.addHandler('TASK_updateTasksCounters_EXECUTED', aListHandler);
         aTodoList.addExecHandler('changedFilter', 'updateRender');  
-
-        
+ 
+        aToggleAllButton.addExecHandler('TASK_updateTasksCounters_EXECUTED', 'updateRender');        
         aToggleAllButton.addExecHandler('TASK_newTask_EXECUTED', 'updateRender');
         aToggleAllButton.addExecHandler('TASK_editTask_EXECUTED', 'updateRender');
-        aToggleAllButton.addExecHandler('TASK_toggleTask_EXECUTED', 'updateRender');
         aToggleAllButton.addExecHandler('TASK_deleteTask_EXECUTED', 'updateRender');
         aToggleAllButton.addExecHandler('TASK_deleteCompletedTasks_EXECUTED', 'updateRender');
+        aToggleAllButton.addExecHandler('TASK_toggleTask_EXECUTED', 'updateRender');
         aToggleAllButton.addExecHandler('TASK_toggleAllTasks_EXECUTED', 'updateRender');
-        aToggleAllButton.addExecHandler('TASK_updateTasksCounters_EXECUTED', 'updateRender');        
         aToggleAllButton.addExecHandler('changedFilter', 'updateRender'); 
 
-
-        var aFooterHandler = new FooterHandler();
-        aFooter.addHandler('TASK_newTask_EXECUTED', aFooterHandler);
-        aFooter.addHandler('TASK_editTask_EXECUTED', aFooterHandler);
-        aFooter.addHandler('TASK_toggleTask_EXECUTED', aFooterHandler);
-        aFooter.addHandler('TASK_deleteTask_EXECUTED', aFooterHandler);
-        aFooter.addHandler('TASK_deleteCompletedTasks_EXECUTED', aFooterHandler);
-        aFooter.addHandler('TASK_toggleAllTasks_EXECUTED', aFooterHandler);
-        aFooter.addHandler('TASK_updateTasksCounters_EXECUTED', aFooterHandler);
+        aFooter.addExecHandler('TASK_newTask_EXECUTED', 'updateRender');
+        //aFooter.addExecHandler('TASK_editTask_EXECUTED', 'updateRender');
+        aFooter.addExecHandler('TASK_deleteTask_EXECUTED', 'updateRender');
+        aFooter.addExecHandler('TASK_deleteCompletedTasks_EXECUTED', 'updateRender');
+        aFooter.addExecHandler('TASK_toggleTask_EXECUTED', 'updateRender');
+        aFooter.addExecHandler('TASK_toggleAllTasks_EXECUTED', 'updateRender');
+        aFooter.addExecHandler('TASK_updateTasksCounters_EXECUTED', 'updateRender');
         aFooter.addExecHandler('changedFilter', 'updateRender');
     },
 

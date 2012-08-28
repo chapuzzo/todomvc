@@ -14,14 +14,6 @@ InputRenderer = CUORE.Class(CUORE.Renderer, {
         	}			
         });
 	},
-
-	/*updateWhenDrawn: function(component) {
-		this.panel.value = component.getValue();
-	},
-
-	getValue: function(){
-		return this.panel.value;
-	},*/
 	
 	sendInputValue: function(component){
 		component.sendTodoText(this.panel.value.trim());

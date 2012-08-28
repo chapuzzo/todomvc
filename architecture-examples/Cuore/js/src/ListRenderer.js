@@ -19,62 +19,61 @@ ListRenderer = CUORE.Class(CUORE.Renderers.List, {
         ( aFilter == 'active' && todo.completed == false)  ||
         ( aFilter == 'completed' && todo.completed == true) ){
 
-                var item = CUORE.Dom.createElement('li', {'id':todo.id}, this.panel);
-                if (todo.completed)
-                    CUORE.Dom.addClass(item,"completed");
+            var item = CUORE.Dom.createElement('li', {'id':todo.id}, this.panel);
+            if (todo.completed)
+                CUORE.Dom.addClass(item,"completed");
 
-                var div = CUORE.Dom.createElement('div', {}, item);
-                CUORE.Dom.addClass(div,"view");
+            var aDiv = CUORE.Dom.createElement('div', {}, item);
+            CUORE.Dom.addClass(aDiv,"view");
 
-                var checkedValue = todo.completed || undefined;
-                var checkbox = CUORE.Dom.createElement('input', {'type' : 'checkbox', 'checked': checkedValue }, div);
-                CUORE.Dom.addClass(checkbox,"toggle");
-                
-                var label = CUORE.Dom.createElement('label', {}, div);
-                label.innerHTML = todo.title;
+            var checkedValue = todo.completed || undefined;
+            var aCheckbox = CUORE.Dom.createElement('input', {'type' : 'checkbox', 'checked': checkedValue }, aDiv);
+            CUORE.Dom.addClass(aCheckbox,"toggle");
+            
+            var aLabel = CUORE.Dom.createElement('label', {}, aDiv);
+            aLabel.innerHTML = todo.title;
 
-                var button = CUORE.Dom.createElement('button', {}, div);	
-                CUORE.Dom.addClass(button,"destroy");
+            var aButton = CUORE.Dom.createElement('button', {}, aDiv);	
+            CUORE.Dom.addClass(aButton,"destroy");
 
-        		var input = CUORE.Dom.createElement('input', {'taskId':todo.id}, item);
-                input.value = todo.title;
-                CUORE.Dom.addClass(input,"edit");
+    		var anInput = CUORE.Dom.createElement('input', {'taskId':todo.id}, item);
+            anInput.value = todo.title;
+            CUORE.Dom.addClass(anInput,"edit");
 
-                var li = item;
-                label.addEventListener('dblclick', function (){
-                    CUORE.Dom.addClass(li,"editing");
-                    input.focus();
-                });
+            aLabel.addEventListener('dblclick', function (){
+                CUORE.Dom.addClass(item,"editing");
+                anInput.focus();
+            });
 
-                checkbox.addEventListener('change', function() {
-                    var params = {};
-                    params.id = this.parentNode.parentNode.id;
-                    params.value = this.checked;
-                    var service = document.page.getService('TASK');
-                    service.execute('toggleTask', params);
-                });
+            aCheckbox.addEventListener('change', function() {
+                var params = {};
+                params.id = todo.id;
+                params.value = this.checked;
+                var service = document.page.getService('TASK');
+                service.execute('toggleTask', params);
+            });
 
-                input.addEventListener('blur', function(){
-                    var params = {};
-                    params.id = todo.id;
-                    params.text = input.value;
-                    var service = document.page.getService('TASK');
-                    service.execute('editTask', params);            
-                });
+            anInput.addEventListener('blur', function(){
+                var params = {};
+                params.id = todo.id;
+                params.text = anInput.value;
+                var service = document.page.getService('TASK');
+                service.execute('editTask', params);            
+            });
 
-                input.addEventListener('keydown', function(event) {
-                    var KEY_ENTER = 13;
-                    if (event.keyCode == KEY_ENTER){
-                       this.blur();
-                    }           
-                });
+            anInput.addEventListener('keydown', function(event) {
+                var KEY_ENTER = 13;
+                if (event.keyCode == KEY_ENTER){
+                   this.blur();
+                }           
+            });
 
-                button.addEventListener('click', function(){
-                    var params = {};
-                    params.id = todo.id;
-                    var service = document.page.getService('TASK');
-                    service.execute('deleteTask', params);   
-                });
+            aButton.addEventListener('click', function(){
+                var params = {};
+                params.id = todo.id;
+                var service = document.page.getService('TASK');
+                service.execute('deleteTask', params);   
+            });
         };
     }
 });
