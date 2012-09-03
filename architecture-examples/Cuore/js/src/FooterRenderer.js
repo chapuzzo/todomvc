@@ -17,33 +17,8 @@ FooterRenderer = CUORE.Class(CUORE.Renderer, {
 		var filterList = this.createFilterList();
 		this.renderAllFilter(filterList);
 		this.renderActiveFilter(filterList);
-
-
-
-		var liCompleted = CUORE.Dom.createElement('li', {}, filterList);
-		var hrefCompleted = CUORE.Dom.createElement('a', {
-			'href': '#/completed'
-		}, liCompleted);
-		hrefCompleted.innerHTML = "Completed";
-		if (document.page.getFilter() === 'completed') CUORE.Dom.addClass(hrefCompleted, 'selected');
-
-		var button = CUORE.Dom.createElement('botton', {
-			'id': 'clear-completed'
-		}, this.panel);
-		button.innerHTML = "Clear Completed (" + service.completed() + ")";
-		if (service.completed() == 0) button.style.display = 'none';
-
-		button.addEventListener('click', function() {
-			service.execute('deleteCompletedTasks');
-		});
-
-
-
-		hrefCompleted.addEventListener('click', function() {
-			CUORE.Dom.addClass(hrefCompleted, 'selected');
-			CUORE.Dom.removeClass(hrefActive, 'selected');
-			CUORE.Dom.removeClass(hrefAll, 'selected');
-		});
+		this.renderCompletedFilter(filterList);
+		this.renderClearButton(component, filterList);
 	},
 
 	cleanHTML: function() {
@@ -61,7 +36,7 @@ FooterRenderer = CUORE.Class(CUORE.Renderer, {
 		if (itemsLeft == 1) {
 			itemsText = "item"
 		};
-		span.innerHTML += ' '+itemsText +' left';
+		span.innerHTML += ' ' + itemsText + ' left';
 	},
 
 	createFilterList: function(component){
@@ -94,10 +69,38 @@ FooterRenderer = CUORE.Class(CUORE.Renderer, {
 		}, liActive);
 		hrefActive.innerHTML = "Active";
 		if (document.page.getFilter() === 'active') CUORE.Dom.addClass(hrefActive, 'selected');
+
 		hrefActive.addEventListener('click', function() {
 			CUORE.Dom.addClass(hrefActive, 'selected');
 			CUORE.Dom.removeClass(hrefCompleted, 'selected');
 			CUORE.Dom.removeClass(hrefAll, 'selected');
+		});
+	},
+
+	renderCompletedFilter: function(filterList){
+		var liCompleted = CUORE.Dom.createElement('li', {}, filterList);
+		var hrefCompleted = CUORE.Dom.createElement('a', {
+			'href': '#/completed'
+		}, liCompleted);
+		hrefCompleted.innerHTML = "Completed";
+		if (document.page.getFilter() === 'completed') CUORE.Dom.addClass(hrefCompleted, 'selected');
+
+		hrefCompleted.addEventListener('click', function() {
+			CUORE.Dom.addClass(hrefCompleted, 'selected');
+			CUORE.Dom.removeClass(hrefActive, 'selected');
+			CUORE.Dom.removeClass(hrefAll, 'selected');
+		});
+	},
+
+	renderClearButton: function(component,filterList){
+		var button = CUORE.Dom.createElement('button', {
+			'id': 'clear-completed'
+		}, this.panel);
+		button.innerHTML = "Clear Completed (" + component.completedTODONumber() + ")";
+		if (component.completedTODONumber() == 0) button.style.display = 'none';
+
+		button.addEventListener('click', function() {
+			service.execute('deleteCompletedTasks');
 		});
 	}
 });

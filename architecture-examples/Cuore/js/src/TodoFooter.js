@@ -14,5 +14,11 @@ TodoFooter = CUORE.Class(CUORE.Component, {
     activeTODONumber : function()
     {
     	return this.services.getService('TASK').active();
+    },
+
+    completedTODONumber : function()
+    {
+        return this.services.getService('TASK').completed();
     }
+
 });
