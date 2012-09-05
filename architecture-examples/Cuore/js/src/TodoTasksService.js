@@ -30,14 +30,16 @@ TodoTasksService = CUORE.Class(CUORE.Service, {
         localStorage["todos-Cuore"] = JSON.stringify(todos);
     },
 
+    _notCompleted: function(todo){
+        return todo.completed;
+    },
+
     newTask: function(task){
         var eventname = this.getEventNameForExecution('newTask');
     	if (task.length > 0) {       
             var todos = this._getTodos();
             todos.push({'id':this._getUID(), 'title':task, 'completed':false});
-            this._saveTodos(todos);
-            this.updateTasksCounters();
-            this.emit(eventname, todos);
+            this.publishResults(eventname, todos);
         }        
     },
 
@@ -49,9 +51,7 @@ TodoTasksService = CUORE.Class(CUORE.Service, {
                 todos.splice(i,1);
                 break;
             }
-        this._saveTodos(todos);
-        this.updateTasksCounters();
-        this.emit(eventname, todos);
+        this.publishResults(eventname, todos);
     },
 
     editTask: function(params){
@@ -61,9 +61,7 @@ TodoTasksService = CUORE.Class(CUORE.Service, {
         for (var i=0; i<todos.length; i++){
             if (todos[i].id === params.id) todos[i].title = params.text;
         }
-        this._saveTodos(todos);
-        this.updateTasksCounters();
-        this.emit(eventname, todos);
+        this.publishResults(eventname, todos);
     },
 
     toggleTask: function(params){
@@ -72,9 +70,7 @@ TodoTasksService = CUORE.Class(CUORE.Service, {
         for (var i=0; i<todos.length; i++){
             if (todos[i].id === params.id) todos[i].completed = params.value;
         }
-        this._saveTodos(todos);
-        this.updateTasksCounters();
-        this.emit(eventname, todos);
+        this.publishResults(eventname, todos);
     },
 
     toggleAllTasks: function(newValue){
@@ -83,9 +79,7 @@ TodoTasksService = CUORE.Class(CUORE.Service, {
         for (var i=0; i<todos.length; i++){
             todos[i].completed = newValue;
         }
-        this._saveTodos(todos);
-        this.updateTasksCounters();
-        this.emit(eventname, todos);
+        this.publishResults(eventname, todos);
     },
 
     deleteCompletedTasks: function(params){
@@ -93,11 +87,10 @@ TodoTasksService = CUORE.Class(CUORE.Service, {
         var todos = this._getTodos();
         var newtodolist = [];
         for (var i=0; i<todos.length; i++){
-            if (todos[i].completed === false) newtodolist.push(todos[i]);
+            var theTodo=todos[i];
+            if (this._notCompleted(theTodo)) newtodolist.push (theTodo);
         }
-        this._saveTodos(newtodolist);
-        this.updateTasksCounters();
-        this.emit(eventname, newtodolist);
+        this.publishResults(eventname, newtodolist);
     },
 
     updateTasksCounters: function(){
@@ -107,13 +100,17 @@ TodoTasksService = CUORE.Class(CUORE.Service, {
         this.completedTasks = 0;
 
         for (var i=0; i<todos.length; i++){
-            // is there a way to remove this if??
             if (todos[i].completed)
                 this.completedTasks++;
-            else
-                this.activeTasks++;
         }
+        this.activeTasks = todos.length - this.completedTasks;
         this.emit(eventname, todos);
+    },
+
+    publishResults: function(eventName, todoList) {
+        this._saveTodos(todoList);
+        this.updateTasksCounters();
+        this.emit(eventName, todoList);
     },
  
     wrapResponse: function(response){

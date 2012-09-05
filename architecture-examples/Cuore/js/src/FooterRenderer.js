@@ -21,12 +21,13 @@ FooterRenderer = CUORE.Class(CUORE.Renderer, {
 		}
 		this.panel.style.display = 'block';
 		this.renderTODOCount(component);
+		
 		var filterList = this.createFilterList();
-
 		for (var filterItem in this.filters){
-			this.renderFilter(filterList, filterItem);
+			this.renderFilter(filterList, this.filters[filterItem]);
 		}
-		this.renderClearButton(component, filterList);
+
+		this.renderClearButton(component);
 	},
 
 	cleanHTML: function() {
@@ -57,20 +58,16 @@ FooterRenderer = CUORE.Class(CUORE.Renderer, {
 	},
 
 	renderFilter: function(filterList, filterName){
-
 		var aFilterLi = CUORE.Dom.createElement('li', {}, filterList);
 		var aFilterHref = CUORE.Dom.createElement('a', {
-			'href': "#/" + this.filters[filterName].href
+			'href': "#/" + filterName.href
 		}, aFilterLi);
-		aFilterHref.innerHTML = this.filters[filterName].title;
-
-		if (document.page.getFilter() === this.filters[filterName].href) 
+		aFilterHref.innerHTML = filterName.title;
+		if (document.page.getFilter() === filterName.href) 
 			CUORE.Dom.addClass(aFilterHref, 'selected');
-
-		return aFilterLi;
 	},
 
-	renderClearButton: function(component,filterList){
+	renderClearButton: function(component){
 		var button = CUORE.Dom.createElement('button', {
 			'id': 'clear-completed'
 		}, this.panel);
@@ -79,9 +76,8 @@ FooterRenderer = CUORE.Class(CUORE.Renderer, {
 			button.style.display = 'none';
 			return;
 		}
-
 		button.addEventListener('click', function() {
-			service.execute('deleteCompletedTasks');
+			CUORE.Bus.emit('deleteCompleted');
 		});
 	}
 });
