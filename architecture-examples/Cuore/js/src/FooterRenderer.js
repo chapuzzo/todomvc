@@ -4,14 +4,11 @@ FooterRenderer = CUORE.Class(CUORE.Renderer, {
 	init: function() {
 		FooterRenderer.parent.init.call(this);
 	},
-
-	liAll : {},
-	liActive : {},
-	liCompleted : {},
+	
 	filters : {
-		all : "ALL",
-		active : "ACTIVE",
-		completed : "COMPLETED"
+		all : {href : "", title : "All"},
+		active : {href : "active", title : "Active" },
+		completed : {href : "completed", title : "Completed"}
 	},
 
 	updateWhenDrawn: function(component) {
@@ -25,9 +22,10 @@ FooterRenderer = CUORE.Class(CUORE.Renderer, {
 		this.panel.style.display = 'block';
 		this.renderTODOCount(component);
 		var filterList = this.createFilterList();
-		liAll = this.renderAllFilter(filterList);
-		liActive = this.renderActiveFilter(filterList);
-		liCompleted = this.renderCompletedFilter(filterList);
+
+		for (var filterItem in this.filters){
+			this.renderFilter(filterList, filterItem);
+		}
 		this.renderClearButton(component, filterList);
 	},
 
@@ -58,56 +56,18 @@ FooterRenderer = CUORE.Class(CUORE.Renderer, {
 		return filterList;
 	},
 
-	renderAllFilter: function(filterList){
-		var liAll = CUORE.Dom.createElement('li', {}, filterList);
-		var hrefAll = CUORE.Dom.createElement('a', {
-			'href': '#/'
-		}, liAll);
-		hrefAll.innerHTML = "All";
+	renderFilter: function(filterList, filterName){
 
-		if (document.page.getFilter() === '') CUORE.Dom.addClass(hrefAll, 'selected');
+		var aFilterLi = CUORE.Dom.createElement('li', {}, filterList);
+		var aFilterHref = CUORE.Dom.createElement('a', {
+			'href': "#/" + this.filters[filterName].href
+		}, aFilterLi);
+		aFilterHref.innerHTML = this.filters[filterName].title;
 
-		hrefAll.addEventListener('click', function() {
-			CUORE.Dom.addClass(hrefAll, 'selected');
-			CUORE.Dom.removeClass(hrefActive, 'selected');
-			CUORE.Dom.removeClass(hrefCompleted, 'selected');
-		});
+		if (document.page.getFilter() === this.filters[filterName].href) 
+			CUORE.Dom.addClass(aFilterHref, 'selected');
 
-		return liAll;
-	},
-
-	renderActiveFilter: function(filterList){
-		var liActive = CUORE.Dom.createElement('li', {}, filterList);
-		var hrefActive = CUORE.Dom.createElement('a', {
-			'href': '#/active'
-		}, liActive);
-		hrefActive.innerHTML = "Active";
-		if (document.page.getFilter() === 'active') CUORE.Dom.addClass(hrefActive, 'selected');
-
-		hrefActive.addEventListener('click', function() {
-			CUORE.Dom.addClass(hrefActive, 'selected');
-			CUORE.Dom.removeClass(hrefCompleted, 'selected');
-			CUORE.Dom.removeClass(hrefAll, 'selected');
-		});
-
-		return liActive;
-	},
-
-	renderCompletedFilter: function(filterList){
-		var liCompleted = CUORE.Dom.createElement('li', {}, filterList);
-		var hrefCompleted = CUORE.Dom.createElement('a', {
-			'href': '#/completed'
-		}, liCompleted);
-		hrefCompleted.innerHTML = "Completed";
-		if (document.page.getFilter() === 'completed') CUORE.Dom.addClass(hrefCompleted, 'selected');
-
-		hrefCompleted.addEventListener('click', function() {
-			CUORE.Dom.addClass(hrefCompleted, 'selected');
-			CUORE.Dom.removeClass(hrefActive, 'selected');
-			CUORE.Dom.removeClass(hrefAll, 'selected');
-		});
-
-		return liCompleted;
+		return aFilterLi;
 	},
 
 	renderClearButton: function(component,filterList){
