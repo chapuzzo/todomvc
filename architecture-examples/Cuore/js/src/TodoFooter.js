@@ -20,5 +20,4 @@ TodoFooter = CUORE.Class(CUORE.Component, {
     {
         return this.services.getService('TASK').completed();
     }
-
 });

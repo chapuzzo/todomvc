@@ -1,7 +1,17 @@
 FooterRenderer = CUORE.Class(CUORE.Renderer, {
 
+
 	init: function() {
 		FooterRenderer.parent.init.call(this);
+	},
+
+	liAll : {},
+	liActive : {},
+	liCompleted : {},
+	filters : {
+		all : "ALL",
+		active : "ACTIVE",
+		completed : "COMPLETED"
 	},
 
 	updateWhenDrawn: function(component) {
@@ -15,14 +25,19 @@ FooterRenderer = CUORE.Class(CUORE.Renderer, {
 		this.panel.style.display = 'block';
 		this.renderTODOCount(component);
 		var filterList = this.createFilterList();
-		this.renderAllFilter(filterList);
-		this.renderActiveFilter(filterList);
-		this.renderCompletedFilter(filterList);
+		liAll = this.renderAllFilter(filterList);
+		liActive = this.renderActiveFilter(filterList);
+		liCompleted = this.renderCompletedFilter(filterList);
 		this.renderClearButton(component, filterList);
 	},
 
 	cleanHTML: function() {
 		this.panel.innerHTML = "";
+	},
+
+	pluralize : function(text, number) {
+		if (number == 1) return text;
+		return (text + "s");
 	},
 
 	renderTODOCount: function(component) {
@@ -32,15 +47,11 @@ FooterRenderer = CUORE.Class(CUORE.Renderer, {
 		var strong = CUORE.Dom.createElement('strong', {}, span);
 		var itemsLeft = component.activeTODONumber();
 		strong.innerHTML = itemsLeft;
-		itemsText = "items";
-		if (itemsLeft == 1) {
-			itemsText = "item"
-		};
-		span.innerHTML += ' ' + itemsText + ' left';
+		span.innerHTML += ' ' + this.pluralize("item", itemsLeft) + ' left';
 	},
 
 	createFilterList: function(component){
-		var filterList=CUORE.Dom.createElement('ul', {
+		var filterList = CUORE.Dom.createElement('ul', {
 			'id': 'filters'
 		}, this.panel);
 
@@ -53,6 +64,7 @@ FooterRenderer = CUORE.Class(CUORE.Renderer, {
 			'href': '#/'
 		}, liAll);
 		hrefAll.innerHTML = "All";
+
 		if (document.page.getFilter() === '') CUORE.Dom.addClass(hrefAll, 'selected');
 
 		hrefAll.addEventListener('click', function() {
@@ -60,6 +72,8 @@ FooterRenderer = CUORE.Class(CUORE.Renderer, {
 			CUORE.Dom.removeClass(hrefActive, 'selected');
 			CUORE.Dom.removeClass(hrefCompleted, 'selected');
 		});
+
+		return liAll;
 	},
 
 	renderActiveFilter: function(filterList){
@@ -75,6 +89,8 @@ FooterRenderer = CUORE.Class(CUORE.Renderer, {
 			CUORE.Dom.removeClass(hrefCompleted, 'selected');
 			CUORE.Dom.removeClass(hrefAll, 'selected');
 		});
+
+		return liActive;
 	},
 
 	renderCompletedFilter: function(filterList){
@@ -90,6 +106,8 @@ FooterRenderer = CUORE.Class(CUORE.Renderer, {
 			CUORE.Dom.removeClass(hrefActive, 'selected');
 			CUORE.Dom.removeClass(hrefAll, 'selected');
 		});
+
+		return liCompleted;
 	},
 
 	renderClearButton: function(component,filterList){
@@ -97,7 +115,10 @@ FooterRenderer = CUORE.Class(CUORE.Renderer, {
 			'id': 'clear-completed'
 		}, this.panel);
 		button.innerHTML = "Clear Completed (" + component.completedTODONumber() + ")";
-		if (component.completedTODONumber() == 0) button.style.display = 'none';
+		if (component.completedTODONumber() == 0) {
+			button.style.display = 'none';
+			return;
+		}
 
 		button.addEventListener('click', function() {
 			service.execute('deleteCompletedTasks');
