@@ -1,14 +1,14 @@
 TL.Renderers.List = CUORE.Class(CUORE.Renderers.List, {
     
 	init : function(){
-		TL.Renderers.List.parent.init.call(this);        
-        
+		TL.Renderers.List.parent.init.call(this);
+
 	},
 
     updateWhenDrawn : function(component) {
 		this.panel.innerHTML="";
         for (var i = 0, len = component.size(); i < len; i++) {
-            this._addItem(component.item(i), i);
+            this._addItem(component.item(i));
         }
     },
 
@@ -16,8 +16,8 @@ TL.Renderers.List = CUORE.Class(CUORE.Renderers.List, {
 
         var aFilter = TL.getFilter();
         if ( aFilter == TL.filters.all || 
-        ( aFilter == TL.filters.active && todo.completed == false)  ||
-        ( aFilter == TL.filters.completed && todo.completed == true) ){
+        ( aFilter == TL.filters.active && !todo.completed)  ||
+        ( aFilter == TL.filters.completed && todo.completed) ){
 
             var anItem = CUORE.Dom.createElement('li', {'id':todo.id}, this.panel);
             if (todo.completed)

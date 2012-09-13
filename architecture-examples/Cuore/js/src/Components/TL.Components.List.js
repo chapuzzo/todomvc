@@ -7,7 +7,7 @@ TL.Components.List = CUORE.Class(CUORE.Components.List, {
 
     deleteCompleted: function() {
         var service = document.page.getService('TASK');
-        service.execute('deleteCompletedTasks');
+        service.execute('deleteCompletedTasks', undefined);
     },
 
     changedFilter: function() {
