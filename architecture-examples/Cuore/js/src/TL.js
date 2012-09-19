@@ -25,5 +25,3 @@ TL.getFilter = function(){
 TL.setFilter = function(newFilter){
 	TL.currentFilter = newFilter;
 }
-
-console.log(TL);

@@ -1,4 +1,4 @@
-describe("Page", function() {
+describe("TL.Pages.Main", function() {
 
 	var aPage;
     beforeEach(function() {

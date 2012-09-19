@@ -1,4 +1,4 @@
-describe("InputRenderer", function() {
+describe("TL.Renderers.Input", function() {
 
     beforeEach(function() {
         this.addMatchers({

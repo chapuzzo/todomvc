@@ -1,4 +1,4 @@
-describe("Input", function() {
+describe("TL.Components.Input", function() {
 
     beforeEach(function() {
         this.addMatchers({

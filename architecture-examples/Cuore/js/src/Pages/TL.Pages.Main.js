@@ -35,13 +35,10 @@ TL.Pages.Main = CUORE.Class(CUORE.Page, {
         var aTodoList = new TL.Components.List();
         this.addComponent(aTodoList, 'todo-list', CUORE.Behaviours.HIJACK);
         aTodoList.addExecHandler('TASK_updateTasksCounters_EXECUTED', 'fillList');
-        aTodoList.addExecHandler('changedFilter', 'changedFilter');
-        aTodoList.addExecHandler('deleteCompleted', 'deleteCompleted');
  
         var aFooter = new TL.Components.Footer();
         this.addComponent(aFooter, 'footer', CUORE.Behaviours.HIJACK);
         aFooter.addExecHandler('TASK_updateTasksCounters_EXECUTED', 'updateRender');
-        aFooter.addExecHandler('changedFilter', 'updateRender');
     },
 
 	initializeServices: function(){

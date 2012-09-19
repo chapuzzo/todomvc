@@ -110,7 +110,7 @@ TL.Services.Tasks = CUORE.Class(CUORE.Service, {
     publishResults: function(eventName, todoList) {
         this._saveTodos(todoList);
         this.updateTasksCounters();
-        this.emit(eventName, todoList);
+        //this.emit(eventName, todoList);
     },
  
     wrapResponse: function(response){

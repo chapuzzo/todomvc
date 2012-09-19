@@ -3,6 +3,8 @@ TL.Components.Footer = CUORE.Class(CUORE.Component, {
 	init: function() {
 		TL.Components.Footer.parent.init.call(this);
         this.setRenderer(new TL.Renderers.Footer());        
+
+        this.addExecHandler('changedFilter', 'updateRender');
     },
 
     IsThereSomethingToShow : function(){

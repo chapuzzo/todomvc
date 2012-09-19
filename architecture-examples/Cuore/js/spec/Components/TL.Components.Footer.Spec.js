@@ -1,4 +1,4 @@
-describe("Footer", function() {
+describe("TL.Components.Footer", function() {
 
     beforeEach(function() {
         this.addMatchers({

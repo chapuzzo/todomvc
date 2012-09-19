@@ -1,4 +1,4 @@
-describe("ItemRenderer",function(){
+describe("TL.Renderers.Item",function(){
 
 	beforeEach(function() {
         this.addMatchers({
