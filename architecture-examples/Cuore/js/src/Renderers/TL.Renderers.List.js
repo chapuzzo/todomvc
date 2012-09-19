@@ -13,67 +13,82 @@ TL.Renderers.List = CUORE.Class(CUORE.Renderers.List, {
     },
 
     _addItem : function(todo) {
-
         var aFilter = TL.getFilter();
         if ( aFilter == TL.filters.all || 
         ( aFilter == TL.filters.active && !todo.completed)  ||
         ( aFilter == TL.filters.completed && todo.completed) ){
 
             var anItem = CUORE.Dom.createElement('li', {'id':todo.id}, this.panel);
-            if (todo.completed)
-                CUORE.Dom.addClass(anItem,"completed");
+            this._addClass(todo, anItem);
+            var theDiv = this._addDiv(anItem);
+            this._addCheckbox(todo, theDiv);
+            var theInput = this._addInput(todo, anItem)
+            this._addLabel(todo, anItem, theInput, theDiv);
+            this._addDestroyButton(todo, theDiv);
+        };
+    },
 
-            var aDiv = CUORE.Dom.createElement('div', {}, anItem);
-            CUORE.Dom.addClass(aDiv,"view");
+    _addDiv: function(anItem){
+        var aDiv = CUORE.Dom.createElement('div', {}, anItem);
+        CUORE.Dom.addClass(aDiv,"view");
+        return aDiv;
+    },
 
-            var checkedValue = todo.completed || undefined;
-            var aCheckbox = CUORE.Dom.createElement('input', {'type' : 'checkbox', 'checked': checkedValue }, aDiv);
-            CUORE.Dom.addClass(aCheckbox,"toggle");
-            
+    _addCheckbox : function(todo, aDiv){
+        var checkedValue = todo.completed || undefined;
+        var aCheckbox = CUORE.Dom.createElement('input', {'type' : 'checkbox', 'checked': checkedValue }, aDiv);
+        CUORE.Dom.addClass(aCheckbox,"toggle");
+        aCheckbox.addEventListener('change', function() {
+            var params = {};
+            params.id = todo.id;
+            params.value = this.checked;
+            var service = document.page.getService('TASK');
+            service.execute('toggleTask', params);
+        });
+    },
+
+    _addDestroyButton: function(todo, aDiv){
+        var aButton = CUORE.Dom.createElement('button', {}, aDiv);  
+        CUORE.Dom.addClass(aButton,"destroy");
+        aButton.addEventListener('click', function(){
+            var params = {};
+            params.id = todo.id;
+            var service = document.page.getService('TASK');
+            service.execute('deleteTask', params);   
+        });
+    },
+
+    _addLabel: function(todo, anItem, anInput, aDiv){
             var aLabel = CUORE.Dom.createElement('label', {}, aDiv);
             aLabel.innerHTML = todo.title;
-
-            var aButton = CUORE.Dom.createElement('button', {}, aDiv);	
-            CUORE.Dom.addClass(aButton,"destroy");
-
-    		var anInput = CUORE.Dom.createElement('input', {'taskId':todo.id}, anItem);
-            anInput.value = todo.title;
-            CUORE.Dom.addClass(anInput,"edit");
-
             aLabel.addEventListener('dblclick', function (){
                 CUORE.Dom.addClass(anItem,"editing");
                 anInput.focus();
             });
+    },
 
-            aCheckbox.addEventListener('change', function() {
-                var params = {};
-                params.id = todo.id;
-                params.value = this.checked;
-                var service = document.page.getService('TASK');
-                service.execute('toggleTask', params);
-            });
+    _addInput: function(todo, anItem){
+        var anInput = CUORE.Dom.createElement('input', {'taskId':todo.id}, anItem);
+        anInput.value = todo.title;
+        CUORE.Dom.addClass(anInput,"edit");
+        anInput.addEventListener('blur', function(){
+            var params = {};
+            params.id = todo.id;
+            params.text = this.value;
+            var service = document.page.getService('TASK');
+            service.execute('editTask', params);            
+        });
+        anInput.addEventListener('keydown', function(event) {
+            var KEY_ENTER = 13;
+            if (event.keyCode == KEY_ENTER){
+               this.blur();
+            }           
+        });
+        return anInput;
+    },
 
-            anInput.addEventListener('blur', function(){
-                var params = {};
-                params.id = todo.id;
-                params.text = anInput.value;
-                var service = document.page.getService('TASK');
-                service.execute('editTask', params);            
-            });
-
-            anInput.addEventListener('keydown', function(event) {
-                var KEY_ENTER = 13;
-                if (event.keyCode == KEY_ENTER){
-                   this.blur();
-                }           
-            });
-
-            aButton.addEventListener('click', function(){
-                var params = {};
-                params.id = todo.id;
-                var service = document.page.getService('TASK');
-                service.execute('deleteTask', params);   
-            });
-        };
+    _addClass: function(todo, anItem){
+        if (todo.completed)
+            CUORE.Dom.addClass(anItem,"completed");
     }
 });

@@ -7,12 +7,12 @@ describe("Input", function() {
     });
 
     it("extends Input", function() {
-        var input = new TodoInput();
+        var input = new TL.Components.Input();
         expect(input).toBeInstanceOf(CUORE.Components.Input);
     });
     
     it("sends a message", function() {
-		var anInput = new TodoInput();
+		var anInput = new TL.Components.Input();
 		var txt = "thisIsANewToDo";
 
         anInput.sendTodoText = jasmine.createSpy('sendTodoText');
@@ -22,8 +22,8 @@ describe("Input", function() {
 	});
 
     it("has a renderer associated", function() {
-        var aInput = new TodoInput();
-        expect(aInput.renderer).toBeInstanceOf(InputRenderer);
+        var aInput = new TL.Components.Input();
+        expect(aInput.renderer).toBeInstanceOf(TL.Renderers.Input);
     });    
     
 });

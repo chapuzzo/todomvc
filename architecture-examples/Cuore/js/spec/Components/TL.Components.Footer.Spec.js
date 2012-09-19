@@ -7,8 +7,8 @@ describe("Footer", function() {
     });
 
     it("has a renderer associated", function() {
-        var aTodoFooter = new TodoFooter();
-        expect(aTodoFooter.renderer).toBeInstanceOf(FooterRenderer);
+        var aTodoFooter = new TL.Components.Footer();
+        expect(aTodoFooter.renderer).toBeInstanceOf(TL.Renderers.Footer);
     });    
     
 });

@@ -5,12 +5,12 @@ describe("Page", function() {
         this.addMatchers({
            toBeInstanceOf: CUORE.Matchers.toBeInstanceOf
         });
-        aPage = new TodoPage("http://www.anydomain.com");
+        aPage = new TL.Pages.Main("http://www.anydomain.com");
             
     });
 
     it("extends page", function() {
-        expect(aPage).toBeInstanceOf(TodoPage);
+        expect(aPage).toBeInstanceOf(TL.Pages.Main);
     });
     
     it("contains an input", function() {
@@ -46,20 +46,20 @@ describe("Page", function() {
         aPage.initializeComponents();
         
         var arguments = aPage.addComponent.argsForCall[3];
-        expect(arguments[0]).toBeInstanceOf(TodoFooter);
+        expect(arguments[0]).toBeInstanceOf(TL.Components.Footer);
         expect(arguments[1]).toEqual("footer");
     });    
 
     it("has a TodoTasksService", function(){
-        var aTodoTasksService = new TodoTasksService();
+        var aTodoTasksService = new TL.Services.Tasks();
 
-        expect(aPage.getService(aTodoTasksService.getName())).toBeInstanceOf(TodoTasksService);
+        expect(aPage.getService(aTodoTasksService.getName())).toBeInstanceOf(TL.Services.Tasks);
     });
 
     it("correctly sets and gets filters", function(){
         var aFilter = "allAroundTheWorld"
-        aPage.setFilter(aFilter);
-        expect(aPage.getFilter()).toBe(aFilter);
+        TL.setFilter(aFilter);
+        expect(TL.getFilter()).toBe(aFilter);
     });
 
     /*

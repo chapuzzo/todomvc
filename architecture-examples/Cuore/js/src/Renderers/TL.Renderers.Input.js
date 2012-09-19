@@ -2,6 +2,19 @@ TL.Renderers.Input = CUORE.Class(CUORE.Renderer, {
 
 	paint: function(component){
 		TL.Renderers.Input.parent.paint.call(this,component);
+		this._addEventListeners(component);
+	},
+	
+	sendInputValue: function(component){
+		component.sendTodoText(this.panel.value.trim());
+		this._clearPanel();
+	},
+
+	_clearPanel: function(){
+		this.panel.value = "";	
+	},
+
+	_addEventListeners: function(component){
 		var self = this;
 		this.panel.addEventListener('blur', function() {
 				self.sendInputValue(component);
@@ -13,10 +26,5 @@ TL.Renderers.Input = CUORE.Class(CUORE.Renderer, {
         		this.blur();
         	}			
         });
-	},
-	
-	sendInputValue: function(component){
-		component.sendTodoText(this.panel.value.trim());
-		this.panel.value = "";	
 	}
 });

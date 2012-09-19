@@ -7,7 +7,7 @@ describe("ItemRenderer",function(){
     });
 
 	it("inherits from renderer", function(){
-		var anItemRenderer = new ItemRenderer();
+		var anItemRenderer = new TL.Renderers.Item();
 		expect(anItemRenderer).toBeInstanceOf(CUORE.Renderer);
 	});
 	
