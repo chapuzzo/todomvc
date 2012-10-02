@@ -37,6 +37,7 @@ describe("TL.Pages.Main", function() {
         
         var arguments = aPage.addComponent.argsForCall[2];
         expect(arguments[0]).toBeInstanceOf(CUORE.Components.List);
+        expect(arguments[0]).toBeInstanceOf(TL.Components.List);
         expect(arguments[1]).toEqual("todo-list");
     });
 
