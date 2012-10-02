@@ -5,13 +5,13 @@ TL.Pages.Main = CUORE.Class(CUORE.Page, {
 
         window.addEventListener('hashchange', function(){
             var aFilter = window.location.hash.replace(/#\//, '');
-            TL.setFilter(aFilter);
+            TL.filterBy(aFilter);
             CUORE.Bus.emit('changedFilter', aFilter);
         });
 
         window.addEventListener('load', function(){
             var aFilter = window.location.hash.replace(/#\//, '');
-            TL.setFilter(aFilter);
+            TL.filterBy(aFilter);
             CUORE.Bus.emit('changedFilter', aFilter);
         });
 

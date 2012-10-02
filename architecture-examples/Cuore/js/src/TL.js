@@ -10,11 +10,11 @@ TL.Renderers = TL.Renderers || {};
 TL.Decorations = TL.Decorations || {};
 
 
-TL.filters = {
-	all: "",
-	active: "active",
-	completed: "completed"
-};
+TL.filters = TL.filters || {
+		all : {href : "", title : "All"},
+		active : {href : "active", title : "Active" },
+		completed : {href : "completed", title : "Completed"}
+	};
 
 TL.currentFilter = TL.filters.all;
 
@@ -22,6 +22,7 @@ TL.getFilter = function(){
 	return TL.currentFilter;
 }
 
-TL.setFilter = function(newFilter){
-	TL.currentFilter = newFilter;
+TL.filterBy = function(newFilter){
+	newFilter = newFilter || "all";
+	TL.currentFilter = TL.filters[newFilter];
 }

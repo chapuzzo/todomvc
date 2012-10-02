@@ -56,12 +56,7 @@ describe("TL.Pages.Main", function() {
         expect(aPage.getService(aTodoTasksService.getName())).toBeInstanceOf(TL.Services.Tasks);
     });
 
-    it("correctly sets and gets filters", function(){
-        var aFilter = "allAroundTheWorld"
-        TL.setFilter(aFilter);
-        expect(TL.getFilter()).toBe(aFilter);
-    });
-
+    
     /*
     it("updates tasksCounters on setUp", function(){
 

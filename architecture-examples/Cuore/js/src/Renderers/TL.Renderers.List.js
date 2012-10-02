@@ -21,16 +21,16 @@ TL.Renderers.List = CUORE.Class(CUORE.Renderers.List, {
     },
 
     _renderItem: function(todo, anItem){
-        this._addDiv(anItem);
-        this._addInput(todo, anItem)
-        this._addCheckbox(todo, anItem);
-        this._addLabel(todo, anItem);
-        this._addDestroyButton(todo, anItem);
+        this._addInput(todo, anItem);
+        this._addDiv(todo, anItem);
     },
 
-    _addDiv: function(anItem){
+    _addDiv: function(todo, anItem){
         var aDiv = CUORE.Dom.createElement('div', {}, anItem);
         CUORE.Dom.addClass(aDiv,"view");
+        this._addCheckbox(todo, aDiv);
+        this._addLabel(todo, aDiv);
+        this._addDestroyButton(todo, aDiv);
     },
 
     _addInput: function(todo, anItem){
@@ -52,8 +52,7 @@ TL.Renderers.List = CUORE.Class(CUORE.Renderers.List, {
         });
     },
 
-    _addCheckbox : function(todo, anItem){
-        var aDiv = anItem.firstChild;
+    _addCheckbox : function(todo, aDiv){
         var checkedValue = todo.completed || undefined;
         var aCheckbox = CUORE.Dom.createElement('input', {'type' : 'checkbox', 'checked': checkedValue }, aDiv);
         CUORE.Dom.addClass(aCheckbox,"toggle");
@@ -66,19 +65,17 @@ TL.Renderers.List = CUORE.Class(CUORE.Renderers.List, {
         });
     },
 
-    _addLabel: function(todo, anItem){
-            var aDiv = anItem.firstChild;
-            var anInput = aDiv.nextSibling;
-            var aLabel = CUORE.Dom.createElement('label', {}, aDiv);
-            aLabel.innerHTML = todo.title;
-            aLabel.addEventListener('dblclick', function (){
-                CUORE.Dom.addClass(anItem,"editing");
-                anInput.focus();
-            });
+    _addLabel: function(todo, aDiv){
+        var anInput = aDiv.parentNode.firstChild;
+        var aLabel = CUORE.Dom.createElement('label', {}, aDiv);
+        aLabel.innerHTML = todo.title;
+        aLabel.addEventListener('dblclick', function (){
+            CUORE.Dom.addClass(aDiv.parentNode,"editing");
+            anInput.focus();
+        });
     },
 
-    _addDestroyButton: function(todo, anItem){
-        var aDiv = anItem.firstChild;
+    _addDestroyButton: function(todo, aDiv){
         var aButton = CUORE.Dom.createElement('button', {}, aDiv);  
         CUORE.Dom.addClass(aButton,"destroy");
         aButton.addEventListener('click', function(){

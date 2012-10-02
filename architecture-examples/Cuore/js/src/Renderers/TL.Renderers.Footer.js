@@ -4,12 +4,6 @@ TL.Renderers.Footer = CUORE.Class(CUORE.Renderer, {
 		TL.Renderers.Footer.parent.init.call(this);
 	},
 	
-	filters : {
-		all : {href : "", title : "All"},
-		active : {href : "active", title : "Active" },
-		completed : {href : "completed", title : "Completed"}
-	},
-
 	updateWhenDrawn: function(component) {
 		var service = document.page.getService('TASK');
 		this.cleanHTML();
@@ -21,9 +15,9 @@ TL.Renderers.Footer = CUORE.Class(CUORE.Renderer, {
 		this.panel.style.display = 'block';
 		this.renderTODOCount(component);
 		
-		var filterList = this.createFilterList();
-		for (var filterItem in this.filters){
-			this.renderFilter(filterList, this.filters[filterItem]);
+		var filtersElement = this.createFilterList();
+		for (var i in TL.filters){
+			this.renderFilter(filtersElement, TL.filters[i]);
 		}
 
 		this.renderClearButton(component);
@@ -49,20 +43,22 @@ TL.Renderers.Footer = CUORE.Class(CUORE.Renderer, {
 	},
 
 	createFilterList: function(component){
-		var filterList = CUORE.Dom.createElement('ul', {
+		var filtersElement = CUORE.Dom.createElement('ul', {
 			'id': 'filters'
 		}, this.panel);
 
-		return filterList;
+		return filtersElement;
 	},
 
-	renderFilter: function(filterList, filterName){
-		var aFilterLi = CUORE.Dom.createElement('li', {}, filterList);
+	renderFilter: function(filtersElement, filterItem){
+		console.log("fi");
+			console.log(filterItem);
+		var aFilterLi = CUORE.Dom.createElement('li', {}, filtersElement);
 		var aFilterHref = CUORE.Dom.createElement('a', {
-			'href': "#/" + filterName.href
+			'href': "#/" + filterItem.href
 		}, aFilterLi);
-		aFilterHref.innerHTML = filterName.title;
-		if (TL.getFilter() === filterName.href) 
+		aFilterHref.innerHTML = filterItem.title;
+		if (TL.getFilter().href === filterItem.href) 
 			CUORE.Dom.addClass(aFilterHref, 'selected');
 	},
 
